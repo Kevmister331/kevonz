@@ -1,5 +1,5 @@
 (function () {
-  var FINNHUB_KEY = (typeof CONFIG !== "undefined" && CONFIG.FINNHUB_KEY) || "";
+  var USE_PROXY = window.location.hostname !== "localhost";
 
   var holdings = [
     { symbol: "NVDA", buy: 18.54, type: "stock" },
@@ -48,14 +48,13 @@
   }
 
   function fetchStockPrices() {
-    if (!FINNHUB_KEY) return Promise.resolve();
-
     var stocks = holdings.filter(function (h) { return h.type === "stock"; });
     return Promise.all(
       stocks.map(function (h) {
-        return fetch(
-          "https://finnhub.io/api/v1/quote?symbol=" + h.symbol + "&token=" + FINNHUB_KEY
-        )
+        var url = USE_PROXY
+          ? "/api/stocks?symbol=" + h.symbol
+          : "https://finnhub.io/api/v1/quote?symbol=" + h.symbol + "&token=" + ((typeof CONFIG !== "undefined" && CONFIG.FINNHUB_KEY) || "");
+        return fetch(url)
           .then(function (r) { return r.json(); })
           .then(function (d) { if (d.c) h.current = d.c; })
           .catch(function () {});
