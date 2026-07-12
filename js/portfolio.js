@@ -10,6 +10,24 @@
     { symbol: "ETH", buy: 200, type: "crypto", coinId: "ethereum" },
   ];
 
+  function loadCachedPrices() {
+    try {
+      var cached = JSON.parse(localStorage.getItem("portfolioPrices"));
+      if (!cached) return;
+      holdings.forEach(function (h) {
+        if (cached[h.symbol] != null) h.current = cached[h.symbol];
+      });
+    } catch (e) {}
+  }
+
+  function savePrices() {
+    var prices = {};
+    holdings.forEach(function (h) {
+      if (h.current != null) prices[h.symbol] = h.current;
+    });
+    try { localStorage.setItem("portfolioPrices", JSON.stringify(prices)); } catch (e) {}
+  }
+
   function isMarketOpen() {
     var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: "America/New_York",
@@ -78,14 +96,6 @@
       gainEl.textContent = sign + pct.toFixed(0) + "%";
       gainEl.className = "gain " + (pct >= 0 ? "positive" : "negative");
     });
-
-    var status = document.getElementById("market-status");
-    if (status) {
-      var open = isMarketOpen();
-      status.textContent = open
-        ? "Market open — prices updating live"
-        : "Market closed — showing last available prices";
-    }
   }
 
   function formatPrice(n) {
@@ -96,7 +106,10 @@
   }
 
   function update() {
-    return Promise.all([fetchStockPrices(), fetchCryptoPrices()]).then(render);
+    return Promise.all([fetchStockPrices(), fetchCryptoPrices()]).then(function () {
+      savePrices();
+      render();
+    });
   }
 
   function tick() {
@@ -106,5 +119,7 @@
     });
   }
 
+  loadCachedPrices();
+  render();
   tick();
 })();

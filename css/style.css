@@ -326,11 +326,13 @@ article p {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .layout {
     flex-direction: column;
-    gap: 32px;
-    padding: 32px 20px;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 32px 24px;
+    max-width: 100%;
   }
 
   nav {
@@ -338,7 +340,7 @@ article p {
   }
 
   nav .name {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
   nav ul {
@@ -349,5 +351,20 @@ article p {
 
   nav li {
     margin-bottom: 0;
+  }
+
+  main {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .portfolio li {
+    font-size: 15px;
+  }
+
+  blockquote {
+    margin-left: 0;
   }
 }

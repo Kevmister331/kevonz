@@ -23,7 +23,7 @@
 
   nav.innerHTML =
     '<div class="name">' +
-      '<a href="/">Kevin Hu</a>' +
+      "Kevin Hu" +
       '<div class="alias"><em>Kevonz</em></div>' +
     "</div>" +
     "<ul>" + items + "</ul>" +
