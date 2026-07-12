@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Room — Kevin Hu</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <nav></nav>
+      <main>
+        <div id="room-gate" class="room-gate">
+          <form id="room-form">
+            <label for="room-password">Password</label>
+            <input
+              type="password"
+              id="room-password"
+              name="password"
+              autocomplete="current-password"
+              required
+            />
+            <button type="submit">Enter</button>
+          </form>
+          <p id="room-error" class="room-error">Incorrect password.</p>
+        </div>
+
+        <div id="room-content" class="room-content">
+          <h1>The Room</h1>
+          <p>
+            Private notes live here. Add whatever you don't want on the public
+            site — drafts, ideas, journal entries.
+          </p>
+          <p>This is a placeholder. Edit the-room/index.html to add your content.</p>
+        </div>
+      </main>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="/js/room.js"></script>
+  </body>
+</html>
